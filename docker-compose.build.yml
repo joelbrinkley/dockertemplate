@@ -1,0 +1,15 @@
+ version: '3.3'
+ services:
+    template-database: 
+      build: 
+        context: ./
+        dockerfile: ./docker/Database/Dockerfile
+    template-api:
+      build: 
+          context: ./
+          dockerfile: ./docker/Api/Dockerfile
+    client-ui: 
+      build:
+        context: ./
+        dockerfile: ./docker/Client/Dockerfile
+   

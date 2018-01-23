@@ -6,7 +6,7 @@ FROM ssdt as build
 
 WORKDIR /Database
 
-COPY /Database/ .
+COPY /src/Database/ .
 
 RUN msbuild Database.sqlproj /P:Configuration=Release
 
@@ -25,7 +25,7 @@ WORKDIR C:\init
 
 COPY --from=build C:\Database\bin\Release\Database.dacpac .
 
-COPY .docker\Database\initialize_database.ps1 .
+COPY \docker\Database\initialize_database.ps1 .
 
 CMD powershell ./initialize_database.ps1 -sa_password $env:sa_password, -data_path $env:DATA_PATH -databaseName TemplateDatabase -VERBOSE
 

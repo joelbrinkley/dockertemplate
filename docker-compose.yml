@@ -1,0 +1,16 @@
+version : '3.3'
+services: 
+  template-database: 
+    image: template/database:v1
+    networks: 
+      - template-net
+  template-api:
+    image: template/api:v1
+    networks:
+      - template-net
+  client-ui: 
+    image: template/ng-ui:v1
+    networks:
+      - template-net
+networks:
+  template-net:

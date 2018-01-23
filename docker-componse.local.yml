@@ -1,0 +1,16 @@
+ template-database: 
+   ports:
+      - "1433:1433"
+  template-api:
+    ports:
+      - "51000:3000"
+    depends_on: 
+      - template-database
+  client-ui:  
+    depends_on: 
+      - template-api
+  networks:
+    template-net:
+      external:
+        name: nat
+   
