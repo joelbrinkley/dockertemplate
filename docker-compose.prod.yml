@@ -1,0 +1,25 @@
+ version: '3.3'
+ services:
+    template-database: 
+      deploy:
+        endpoint_mode: dnsrr
+        placement:
+          constraints:
+            - node.platform.os == windows
+    template-api:
+     deploy:
+        endpoint_mode: dnsrr
+        placement:
+          constraints:
+            - node.platform.os == windows
+    client-ui: 
+        ports:
+          mode: host
+          published: 3000
+          target: 3000
+       deploy:
+        endpoint_mode: dnsrr
+        placement:
+          constraints:
+            - node.platform.os == windows
+   

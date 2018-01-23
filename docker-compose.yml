@@ -1,15 +1,23 @@
-version : '3.3'
+version: "3.3"
 services: 
   template-database: 
     image: template/database:v1
+    container_name: template-database
     networks: 
       - template-net
   template-api:
     image: template/api:v1
+    container_name: template-api
     networks:
       - template-net
   client-ui: 
     image: template/ng-ui:v1
+    container_name: template-ui
+    networks:
+      - template-net
+  message-queue: 
+    image: nats:nanoserver
+    container_name: template-mq
     networks:
       - template-net
 networks:

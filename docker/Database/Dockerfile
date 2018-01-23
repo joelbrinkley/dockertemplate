@@ -2,7 +2,7 @@
 #reference https://github.com/docker/labs/blob/master/windows/sql-server/part-1.md
 #reference https://blogs.msdn.microsoft.com/ssdt/2016/08/22/releasing-ssdt-with-visual-studio-15-preview-4-and-introducing-ssdt-msbuild-nuget-package/
 #reference https://blogs.msdn.microsoft.com/ssdt/2016/08/22/part-5-use-your-own-build-and-deployment-agent/
-FROM ssdt as build
+FROM joelvbrinkley/ssdt as build
 
 WORKDIR /Database
 

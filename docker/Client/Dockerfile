@@ -1,4 +1,4 @@
-FROM joelvbrinkley/angular-build as builder
+FROM joelvbrinkley/angular-build:latest as builder
 
 RUN mkdir ng-app
 
