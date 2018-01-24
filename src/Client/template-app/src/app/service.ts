@@ -7,6 +7,6 @@ export class ValueService {
 
     }
     getValues() {
-        return this.http.get('http://localhost:8080/api/values');
+        return this.http.get('http://localhost:8273/api/values');
     }
 }

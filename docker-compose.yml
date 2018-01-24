@@ -22,3 +22,4 @@ services:
       - template-net
 networks:
   template-net:
+   

@@ -1,6 +1,18 @@
 # dockertemplate
 This is a template project showing how to structure and containerize a .net application that has a database, angularjs UI, messaging, and message handlers. This example uses Windows Containers.
 
+#Quick Guide
+
+```
+    Execute Powershell
+    .\_build.ps1 
+
+    .\_local.ps1
+    
+     Use Browser
+     http://localhost:51000
+```
+
 
 ## Build
 

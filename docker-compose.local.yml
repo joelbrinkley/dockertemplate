@@ -4,6 +4,8 @@ services:
     ports:
       - "1433:1433"
   template-api:
+    ports:
+      - "8273:80"
     depends_on: 
       - template-database
   client-ui:  
@@ -12,7 +14,10 @@ services:
     depends_on: 
       - template-api
       - message-queue
-  message-queue:
+networks:
+  template-net:
+    external:
+      name: nat
     
 
    
