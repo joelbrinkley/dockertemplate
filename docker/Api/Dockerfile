@@ -9,11 +9,8 @@ COPY /src/Api/Api.csproj .
 WORKDIR /src/Core
 COPY /src/Core/Core.csproj .
 
-WORKDIR /src/Tests/UnitTests
-COPY /src/Tests/UnitTests/UnitTests.csproj .
-
-WORKDIR /src/Tests/AcceptanceTests
-COPY /src/Tests/AcceptanceTests/AcceptanceTests.csproj .
+WORKDIR /src/Messaging
+COPY /src/Messaging/Messaging.csproj .
 
 WORKDIR /src
 RUN dotnet restore
@@ -21,7 +18,7 @@ RUN dotnet restore
 COPY /src /src
 
 WORKDIR /src/Api
-RUN dotnet publish -c Release -o C:\build --no-restore
+RUN dotnet publish -c Release -o C:\build 
 
 FROM microsoft/aspnetcore:2.0
 

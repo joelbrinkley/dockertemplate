@@ -4,6 +4,8 @@ services:
     ports:
       - "1433:1433"
   template-api:
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "8273:80"
     depends_on: 
@@ -13,6 +15,11 @@ services:
       - "51000:3000"
     depends_on: 
       - template-api
+      - message-queue
+  add-value-handler:
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on: 
       - message-queue
 networks:
   template-net:

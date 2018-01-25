@@ -12,4 +12,9 @@ services:
     build:
       context: ./
       dockerfile: ./docker/Client/Dockerfile
+  add-value-handler:
+    build:
+      context: ./
+      dockerfile: ./docker/AddValueHandler/Dockerfile
+    
    
