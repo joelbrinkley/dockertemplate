@@ -11,6 +11,9 @@ using Microsoft.Extensions.Options;
 using Messaging;
 using Autofac;
 using NATS.Client;
+using Core;
+using Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api
 {
@@ -40,10 +43,20 @@ namespace Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             var brokerUrl = this.Configuration["BrokerUrl"]?.ToString();
+            
             if (string.IsNullOrEmpty(brokerUrl)) throw new Exception("Missing broker url");
             builder.RegisterType<ConnectionFactory>().AsSelf();
             builder.RegisterType<NatsBus>().AsSelf().WithParameter("brokerUrl", brokerUrl);
             builder.RegisterType<Logging.Logger>().As<Core.Logging.ILog>();
+
+            var templateConnectionString = this.Configuration["ConnectionStrings:TemplateContext"]?.ToString();
+            var optionsBuilder = new DbContextOptionsBuilder<TemplateContext>();
+
+            optionsBuilder.UseSqlServer(templateConnectionString);
+
+            builder.Register(c => new TemplateContext(optionsBuilder.Options));
+
+            builder.RegisterType<ValueRepository>().As<IValuesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

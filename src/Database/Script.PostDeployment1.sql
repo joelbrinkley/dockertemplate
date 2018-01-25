@@ -10,6 +10,16 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+Use [TemplateDatabase];
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'TemplateApplication')
+BEGIN
+	CREATE LOGIN TemplateApplication WITH PASSWORD = 'TemplatePWord!!!'
+	CREATE USER TemplateApplication FOR LOGIN [TemplateApplication]
+    EXEC sp_addrolemember N'db_owner', N'TemplateApplication'
+END;
+GO
 
 IF NOT EXISTS( SELECT TOP 1 1 FROM dbo.[Value])
 BEGIN

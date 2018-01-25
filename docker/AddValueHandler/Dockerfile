@@ -8,6 +8,10 @@ WORKDIR /src/Messaging
 COPY /src/Messaging/Messaging.csproj .
 RUN dotnet restore
 
+WORKDIR /src/Persistance
+COPY /src/Persistance/Persistance.csproj .
+RUN dotnet restore
+
 WORKDIR /src/AddValueHandler
 COPY /src/AddValueHandler/AddValueHandler.csproj .
 RUN dotnet restore

@@ -12,6 +12,9 @@ COPY /src/Core/Core.csproj .
 WORKDIR /src/Messaging
 COPY /src/Messaging/Messaging.csproj .
 
+WORKDIR /src/Persistance
+COPY /src/Persistance/Persistance.csproj .
+
 WORKDIR /src
 RUN dotnet restore
 

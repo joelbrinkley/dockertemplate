@@ -5,22 +5,26 @@ using System.Threading.Tasks;
 using Messaging;
 using Microsoft.AspNetCore.Mvc;
 using Core.Logging;
+using Core;
 
 namespace Api.Controllers {
     [Route("api/[controller]")]
     public class ValuesController : Controller {
         private readonly NatsBus _bus;
+        private readonly IValuesRepository _valuesRepository;
         private readonly ILog _log;
 
-        public ValuesController(NatsBus bus, ILog log) {
+        public ValuesController(NatsBus bus, IValuesRepository valuesRepository, ILog log) {
             this._bus = bus;
+            this._valuesRepository = valuesRepository;
             this._log = log;
         }
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get() {
-            return new string[] { "value1", "value2" };
+        public async Task<IEnumerable<string>> Get() {
+            var values = await this._valuesRepository.GetAllValuesAsync();
+            return values.Select(x=>x.Description);
         }
 
         // GET api/values/5
