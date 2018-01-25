@@ -22,7 +22,8 @@ RUN dotnet publish -c Release -o /app
 
 FROM microsoft/dotnet
 
-ENV MESSAGE_QUEUE_URL="nats://template-mq:4222"
+ENV MESSAGE_QUEUE_URL="nats://template-mq:4222" \
+    CONNECTION_STRING="Server=template-database;Initial Catalog=TemplateDatabase;User Id=sa;Password=Pword!!!;"
 
 WORKDIR /app
 
