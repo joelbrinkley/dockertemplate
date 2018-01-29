@@ -12,11 +12,19 @@ WORKDIR /src/Persistance
 COPY /src/Persistance/Persistance.csproj .
 RUN dotnet restore
 
+WORKDIR /src/Logging
+COPY /src/Logging/Logging.csproj .
+RUN dotnet restore
+
 WORKDIR /src/AddValueHandler
 COPY /src/AddValueHandler/AddValueHandler.csproj .
 RUN dotnet restore
 
-COPY /src /src
+COPY /src/Core/ /src/Core/ 
+COPY /src/Messaging/ /src/Messaging/ 
+COPY /src/Persistance/ /src/Persistance/ 
+COPY /src/Logging/ /src/Logging/ 
+COPY /src/AddValueHandler/ /src/AddValueHandler/ 
 
 RUN dotnet publish -c Release -o /app
 

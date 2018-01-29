@@ -5,20 +5,29 @@ COPY /src/Template.sln .
 
 WORKDIR /src/Api
 COPY /src/Api/Api.csproj .
+RUN dotnet restore
 
 WORKDIR /src/Core
 COPY /src/Core/Core.csproj .
+RUN dotnet restore
 
 WORKDIR /src/Messaging
 COPY /src/Messaging/Messaging.csproj .
+RUN dotnet restore
 
 WORKDIR /src/Persistance
 COPY /src/Persistance/Persistance.csproj .
-
-WORKDIR /src
 RUN dotnet restore
 
-COPY /src /src
+WORKDIR /src/Logging
+COPY /src/Logging/Logging.csproj .
+RUN dotnet restore
+
+COPY /src/Api/ /src/Api/ 
+COPY /src/Core/ /src/Core/ 
+COPY /src/Persistance/ /src/Persistance/ 
+COPY /src/Messaging/ /src/Messaging/ 
+COPY /src/Logging/ /src/Logging
 
 WORKDIR /src/Api
 RUN dotnet publish -c Release -o C:\build 

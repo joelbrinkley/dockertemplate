@@ -1,7 +1,7 @@
 # dockertemplate
 This is a template project showing how to structure and containerize a .net application that has a database, angularjs UI, messaging, and message handlers. This example uses Windows Containers.
 
-#Quick Guide
+# Quick Guide
 
 ```
     Execute Powershell
@@ -67,7 +67,6 @@ The docker file to build the client image uses a custom image that has NodeJs an
 > joelvbrinkley/angular-build
 https://github.com/joelbrinkley/docker-angular-build 
 
-## Api
 
 
 
