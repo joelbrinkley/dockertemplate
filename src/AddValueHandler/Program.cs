@@ -19,6 +19,7 @@ namespace AddValueHandler {
 
         static void Main(string[] args) {
             using(var connection = new ConnectionFactory().CreateConnection(Config.BROKER_URL)) {
+                
                 var subscription = connection.SubscribeAsync(AddValueCommand._subject, "add-value-handler");
 
                 subscription.MessageHandler += AddValue;
@@ -28,27 +29,34 @@ namespace AddValueHandler {
                 Console.WriteLine("Subscription started.");
 
                 _shutdown.WaitOne();
+                connection.Close();
             }
         }
 
         private static void AddValue(object sender, MsgHandlerEventArgs e) {
+
+            _log.LogInfo(DateTime.Now.TimeOfDay.ToString());
             var message = MessageSerializer.Deserializer<AddValueCommand>(e.Message.Data);
 
             var value = message.Value;
 
             var optionsBuilder = new DbContextOptionsBuilder<TemplateContext>();
             optionsBuilder.UseSqlServer(Config.CONNECTION_STRING);
-
-            using(var context = new TemplateContext(optionsBuilder.Options)) {
-                _valueRepository = new ValueRepository(context, _log);
-                var valueToInsert = new Value() { Description = value };
-                var insertTask = _valueRepository.InsertAsync(valueToInsert);
-                insertTask.Wait();
-                if (insertTask.IsCompletedSuccessfully) {
-                    _log.LogInfo($"Processed message: {message.CorrelationId} with value: {value}");
-                } else {
-                    _log.LogInfo($"Failed to process message: {message.CorrelationId} with value: {value}");
+            try {
+                using(var context = new TemplateContext(optionsBuilder.Options)) {
+                    _valueRepository = new ValueRepository(context, _log);
+                    var valueToInsert = new Value() { Description = value };
+                    var insertTask = _valueRepository.InsertAsync(valueToInsert);
+                    insertTask.Wait();
+                    if (insertTask.IsCompletedSuccessfully) {
+                        _log.LogInfo($"Processed message: {message.CorrelationId} at {DateTime.Now.TimeOfDay}");
+                    } else {
+                        _log.LogInfo($"Failed to process message: {message.CorrelationId} with value: {value}");
+                    }
                 }
+            } catch (Exception ex) {
+                _log.LogInfo(ex.Message);
+                _log.LogInfo(ex.StackTrace);
             }
 
         }
